@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import * as $ from "jquery";
+// import * as axios from "axios";
+// const axios = require("axios").default;
+import axios from "axios";
 
 @Component({
   selector: "app-sudoku-table",
@@ -16,22 +19,52 @@ export class SudokuTableComponent implements OnInit {
         let cell = event.currentTarget;
         let cellIndex = cell.getAttribute("cell-index");
         cellIndex = parseInt(cellIndex, 10);
-        let rowIndex = Math.floor(cellIndex / 9);
-        let cellIndexInRow = cellIndex - rowIndex * 9;
+        let rowIndex = Math.floor(cellIndex / 9); //y
+        let cellIndexInRow = cellIndex - rowIndex * 9; //x
+        let currentValue = cell.innerText; //x
         console.log(`current input on : 
         - cellIndex : ${cellIndex}
-        - rowIndex : ${rowIndex}
+        - rowIndex : ${rowIndex} 
         - cellIndexInRow : ${cellIndexInRow}
-        - currentValue : ${cell.innerText}`);
+        - currentValue : ${currentValue}`);
 
-        // todo send ajax call to back end
-        let resultForInputFromBackend = false;
+        //sudoku table representation
+        var listTD = $("td");
+        var sudokuTable = new Array(81);
+        $.each(listTD, function(index, cell) {
+          let cellIndexListTD = cell.getAttribute("cell-index");
+          let cellVal = cell.innerText;
+          if (cellVal == "" || cellIndexListTD == cellIndex) {
+            cellVal = 0;
+          } else {
+            cellVal = parseInt(cellVal);
+          }
+          sudokuTable[cellIndexListTD] = cellVal;
+        });
 
-        if (!resultForInputFromBackend) {
-          $(cell).addClass("incorrect-input");
-        } else {
-          $(cell).removeClass("incorrect-input");
-        }
+        var jsonToSend = {
+          val: parseInt(currentValue),
+          index: cellIndex,
+          sudokuTable: sudokuTable
+        };
+
+        console.log("jsonToSend");
+        console.log(jsonToSend);
+        axios
+          .post("http://localhost:8080/demo/move", jsonToSend)
+          .then(response => {
+            console.log(response);
+            if (response.data == true) {
+              console.log("input accepted");
+              $(cell).removeClass("incorrect-input");
+            } else {
+              console.log("input not accepted");
+              $(cell).addClass("incorrect-input");
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }); // td keyup
     });
   }
