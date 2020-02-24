@@ -21,7 +21,9 @@ Index are counted from left to right and from top to bottom.
 
 ## back end
 
-Route : 
+The project build a war file that can be served on any servlet container.
+
+### REST API
 - Post /move | Return true or false if the input is valid. Take a json as a parameter that contain three values.
   - val: the value of the new input
   - index: the cell index where the user want to add a number
