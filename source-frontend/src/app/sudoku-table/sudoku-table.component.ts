@@ -24,6 +24,7 @@ export class SudokuTableComponent implements OnInit {
         let isInputValid = pattern.test(currentValue);
         if (!isInputValid) {
           cell.innerText = "";
+          $(cell).removeClass("incorrect-input");
           return false;
         }
 
@@ -56,8 +57,9 @@ export class SudokuTableComponent implements OnInit {
           index: cellIndex,
           sudokuTable: sudokuTable
         };
+        console.log(jsonToSend);
 
-        // use axios dependency to send the json to the backend
+        // use axios module to send the json to the backend
         axios
           .post("http://localhost:8080/demo/move", jsonToSend)
           .then(response => {

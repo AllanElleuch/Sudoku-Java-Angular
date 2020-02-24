@@ -26,7 +26,7 @@ public class sudokuController {
 	@RequestMapping("/")
 	public String index() {
 		System.out.println("Handling path : /");
-		return "Greetings from Spring Boot!";
+		return "Server is up";
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class sudokuController {
 		for (int i = 0 + (yIndex * 9); i < 9 + (yIndex * 9); i++) {
 			int valCell = sudokuTable.get(i).intValue();
 			if (valCell == val && valCell != 0) {
-				System.out.println("Input not accepted horizontally. valCell = " + valCell + " index : " + i);
+				System.out.println("Input not accepted horizontally. cell value = " + valCell + " index : " + i);
 				return false;
 			}
 		}
@@ -85,7 +85,7 @@ public class sudokuController {
 			int valCell = +sudokuTable.get(indexOfCellToLook).intValue();
 			if (valCell == val && valCell != 0) {
 				System.out.println(
-						"Input not accepted vertically valCell = " + valCell + " index : " + indexOfCellToLook);
+						"Input not accepted vertically. cell value = " + valCell + " index : " + indexOfCellToLook);
 				return false;
 			}
 		}
@@ -100,7 +100,7 @@ public class sudokuController {
 				int valCell = +sudokuTable.get(indexOfCellToLook).intValue();
 				if (valCell == val && valCell != 0) {
 					System.out.println(
-							"Input not accepted vertically valCell = " + valCell + " index : " + indexOfCellToLook);
+							"Input not accepted for 3x3 sudoku box. cell value = " + valCell + " index : " + indexOfCellToLook);
 					return false;
 				}
 			}
