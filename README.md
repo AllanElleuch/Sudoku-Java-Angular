@@ -4,11 +4,18 @@ This project is a Sudoku game, I created it to show my coding skills. It use a m
 
 ## front end
 
-Functionnality : 
+### Functionnality 
 - Input verification, only number from 1 to 9 are accepted
 - Feedback for bad input, when the backend confirm a bad input the cell is red
 
 ![front end screenshot](https://github.com/AllanElleuch/Sudoku-Java-Angular/blob/master/img/front-end.JPG "Logo Title Text 1")
+
+### Cell index explained
+
+Index are counted from left to right and from top to bottom.
+
+![front end screenshot](https://github.com/AllanElleuch/Sudoku-Java-Angular/blob/master/img/front-end-index.JPG "Logo Title Text 1")
+
 
 ## back end
 
