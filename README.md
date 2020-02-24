@@ -2,7 +2,7 @@
 
 This project is a Sudoku game, I created it to show my coding skills. 
 
-It use a microservice backend coded with Spring Boot in java. The front end is created with Angular in JavasSript. 
+It use a rest microservice backend coded with Spring Boot in java. The front end is created with Angular in JavasSript. 
 
 ## front end
 
@@ -20,7 +20,6 @@ Index are counted from left to right and from top to bottom.
 
 
 ## back end
-
 
 Route : 
 - Post /move | Return true or false if the input is valid. Take a json as a parameter that contain three values.
