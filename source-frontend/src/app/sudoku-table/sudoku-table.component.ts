@@ -17,11 +17,20 @@ export class SudokuTableComponent implements OnInit {
       // Add event listenner on cell input, cell input will be send to the java backend for confirmation of input
       $("td").keyup(function(event) {
         let cell = event.currentTarget;
+
+        // if the input is not a valid number (1-9) we clear the cell
+        var pattern = /^[1-9]+$/;
+        let currentValue = cell.innerText; //x
+        let isInputValid = pattern.test(currentValue);
+        if (!isInputValid) {
+          cell.innerText = "";
+          return false;
+        }
+
         let cellIndex = cell.getAttribute("cell-index");
         cellIndex = parseInt(cellIndex, 10);
         let rowIndex = Math.floor(cellIndex / 9); //y
         let cellIndexInRow = cellIndex - rowIndex * 9; //x
-        let currentValue = cell.innerText; //x
         console.log(`current input on : 
         - cellIndex : ${cellIndex}
         - rowIndex : ${rowIndex} 
@@ -48,18 +57,16 @@ export class SudokuTableComponent implements OnInit {
           sudokuTable: sudokuTable
         };
 
-        console.log("jsonToSend");
-        console.log(jsonToSend);
+        // use axios dependency to send the json to the backend
         axios
           .post("http://localhost:8080/demo/move", jsonToSend)
           .then(response => {
-            console.log(response);
             if (response.data == true) {
-              console.log("input accepted");
               $(cell).removeClass("incorrect-input");
+              return true;
             } else {
-              console.log("input not accepted");
               $(cell).addClass("incorrect-input");
+              return false;
             }
           })
           .catch(error => {
